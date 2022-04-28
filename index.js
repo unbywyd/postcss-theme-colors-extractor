@@ -1,5 +1,5 @@
 const path = require('path');
-let colorFinder = require('./colorFInder');
+let colorFinder = require('./colorFinder');
 const parser = require('postcss-selector-parser');
 const postcss = require('postcss');
 module.exports = {
