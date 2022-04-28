@@ -1,0 +1,53 @@
+@use "functions"as *;
+@use "sass:map";
+@use "sass:list";
+@use "store"as store;
+
+
+@mixin is-inverse {
+    $inverse-mode: get(inverse-mode);
+
+    @if $inverse-mode {
+        @content;
+    }
+}
+
+@mixin is-type($type) {
+    @if get(theme-type)==$type {
+        @content;
+    }
+}
+
+@mixin is-dark() {
+    @include is-type(dark) {
+        @content
+    }
+}
+
+@mixin is-light() {
+    @include is-type(light) {
+        @content
+    }
+}
+
+@mixin skip-inverse {
+    $inverse-mode: get(inverse-mode);
+
+    @if not $inverse-mode {
+        @content;
+    }
+}
+
+@mixin render-vars($selector: ':root') {
+    #{$selector} {
+        $vars: store.get();
+
+        @if (list.length(map.keys($vars)) > 0) {
+
+            @each $key,
+            $color in $vars {
+                --#{$key}: #{$color};
+            }
+        }
+    }
+}

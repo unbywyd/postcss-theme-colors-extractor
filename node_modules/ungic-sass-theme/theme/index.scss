@@ -1,0 +1,13 @@
+@use "sass:map";
+
+$theme: () !default;
+
+// Init
+@use "config.scss" with (
+    $theme: $theme
+);
+
+@forward "config" hide $theme;
+@forward "functions";
+@forward "mixins";
+@forward "meta/functions";

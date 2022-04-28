@@ -1,6 +1,6 @@
 {
   "name": "theme-colors-extractor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This plugin extracts colors from css required for creating themes",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/unbywyd/postcss-theme-colors-extractor#readme",
   "dependencies": {
     "postcss": "^8.4.12",
-    "postcss-selector-parser": "^6.0.10"
+    "postcss-selector-parser": "^6.0.10",
+    "ungic-sass-theme": "^1.0.1"
   }
 }

@@ -1,0 +1,16 @@
+$color-vars: ();
+
+@use "sass:map";
+
+@function add($key, $value) {
+    @if not map.has-key($color-vars, $key) {
+        $color-vars: map.merge($color-vars, (
+            $key: $value
+        )) !global;
+    }
+    @return $color-vars;
+}
+
+@function get() {
+    @return $color-vars;
+}

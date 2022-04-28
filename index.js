@@ -2,6 +2,8 @@ const path = require('path');
 let colorFinder = require('./colorFinder');
 const parser = require('postcss-selector-parser');
 const postcss = require('postcss');
+const fs = require('fs');
+
 module.exports = {
     plugin: (opts = {}) => {
         let options = Object.assign({
@@ -202,33 +204,38 @@ module.exports = {
             }
         };
     },
-    ungicSassThemeIntegrator({ themeName = 'default', themesPath=path.join(__dirname, 'app', 'themes'), themeOptions = {}, includeAs = '*' }) {
+    ungicSassThemeIntegrator({ themeName = 'default', themesPath=path.join(process.cwd(), 'app', 'themes'), themeOptions = {}, includeAs = '*' }) {
         return function (content, loaderContext) {
             const { resourcePath, rootContext } = loaderContext;
 
-            const pathToTheme = path.join(path.relative(path.relative(rootContext, path.dirname(resourcePath)), themesPath), themeName + '.scss').replace(/[\/\\]+/g, '/');
+            if (fs.existsSync(themesPath)) {
+                const pathToTheme = path.join(path.relative(path.relative(rootContext, path.dirname(resourcePath)), themesPath), themeName + '.scss').replace(/[\/\\]+/g, '/');
 
-            let sassOptionsList = [];
-            for (let key in themeOptions) {
-                sassOptionsList.push(`${key}: ${themeOptions[key]}`);
+                let sassOptionsList = [];
+                for (let key in themeOptions) {
+                    sassOptionsList.push(`${key}: ${themeOptions[key]}`);
+                }
+                let sassMap = `(${sassOptionsList.join(',')})`;
+
+                let output = `
+                @use "sass:meta";
+                @use "sass:map";
+                @use "${pathToTheme}" as ungic-theme-config;
+                $ungic-theme-config: meta.module-variables(ungic-theme-config);
+
+                $ungic-theme-config: map.merge($ungic-theme-config, ${sassMap});   
+                
+                @use "ungic-sass-theme" as ${includeAs} with (                      
+                    $theme: $ungic-theme-config
+                );  
+                ${content} 
+                @include render-vars();`
+
+                return output;
+            } else {
+                console.error(`${themesPath} themesPath not exists`);
+                return output;
             }
-            let sassMap = `(${sassOptionsList.join(',')})`;
-
-            let output = `
-              @use "sass:meta";
-              @use "sass:map";
-              @use "${pathToTheme}" as ungic-theme-config;
-              $ungic-theme-config: meta.module-variables(ungic-theme-config);
-
-              $ungic-theme-config: map.merge($ungic-theme-config, ${sassMap});   
-              
-              @use "ungic-sass-theme" as ${includeAs} with (                      
-                $theme: $ungic-theme-config
-              );  
-              ${content} 
-              @include render-vars();`
-
-            return output;
         }
     }
 }

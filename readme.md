@@ -162,6 +162,16 @@ module: {
 }
 ```
 
+Then add the following to the **scripts** section in the `package.json` file:
+
+```json
+...
+"scripts": {
+    ...
+    "build": "webpack --mode production --env production --env theme=default",
+    "build-inverse": "webpack --mode production --env production --env theme=default --env inverse"
+},
+```
 
 
 ## Options
