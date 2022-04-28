@@ -1,0 +1,25 @@
+{
+  "name": "theme-colors-extractor",
+  "version": "1.0.0",
+  "description": "This plugin extracts colors from css required for creating themes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unbywyd/postcss-theme-colors-extractor.git"
+  },
+  "author": "unbywyd",
+  "license": "ISC",
+  "keywords": [
+    "colors",
+    "extractor",
+    "themes",
+    "postcss"
+  ],
+  "bugs": {
+    "url": "https://github.com/unbywyd/postcss-theme-colors-extractor/issues"
+  },
+  "homepage": "https://github.com/unbywyd/postcss-theme-colors-extractor#readme"
+}
