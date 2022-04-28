@@ -37,6 +37,9 @@ This is a postcss plugin that extracts colors from css styles into new css rules
 
 Install `npm install theme-colors-extractor`
 
+### Demo
+
+* [demo project](https://github.com/unbywyd/ungic-sass-theme-demo).
 
 Use in your webpack project:
 
